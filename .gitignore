@@ -2,6 +2,7 @@
 .env
 .env.*
 !.env.example
+!.env.ai-service.example
 
 # 编译输出
 *.exe
