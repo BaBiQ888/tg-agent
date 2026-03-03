@@ -1,0 +1,33 @@
+# 配置文件和环境变量
+.env
+.env.*
+!.env.example
+
+# 编译输出
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+bot
+
+# 临时文件
+*.log
+tmp/
+.DS_Store
+
+# IDE 配置
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# 依赖目录
+vendor/
+
+# 其他
+*.bak
+*.tmp
+
+# 其他忽略项 main
+!.cursor/

@@ -1,0 +1,34 @@
+{
+  "version": "1.0",
+  "project": "TGAgent",
+  "conversations": [
+    {
+      "id": "init_project",
+      "title": "项目初始化",
+      "messages": [
+        {
+          "role": "user",
+          "content": "初始化 TGAgent 项目，创建基本目录结构"
+        },
+        {
+          "role": "assistant",
+          "content": "创建了基本的目录结构和文件"
+        }
+      ]
+    },
+    {
+      "id": "add_db_schema",
+      "title": "添加数据库表结构",
+      "messages": [
+        {
+          "role": "user",
+          "content": "创建数据库表结构：agents, agent_chats, agent_actions 等"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "language": "zh-CN",
+    "model": "gpt-4"
+  }
+}

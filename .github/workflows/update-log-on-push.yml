@@ -1,0 +1,44 @@
+name: Update Log on Push to Test Branch
+
+on:
+  push:
+    branches:
+      - test  # 监听test分支的推送事件
+
+permissions:
+  contents: write
+  
+jobs:
+  update-log:
+    # 如果提交者是管理员B，则跳过工作流
+    if: "!contains(github.actor, 'CaduceusMetaverseProtocol')"
+    runs-on: ubuntu-latest  # 在Ubuntu环境中运行
+
+    steps:
+      # 步骤1：检出代码
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 步骤2：获取最新提交信息
+      - name: Get commit info
+        id: commit-info
+        run: |
+          echo "COMMITTER_NAME=$(git log -1 --pretty=format:'%an')" >> $GITHUB_OUTPUT
+          echo "COMMIT_MESSAGE=$(git log -1 --pretty=format:'%s')" >> $GITHUB_OUTPUT
+          echo "COMMIT_DATE=$(git log -1 --pretty=format:'%cd')" >> $GITHUB_OUTPUT
+
+      # 步骤3：更新UpdateLog.txt
+      - name: Update UpdateLog.txt
+        run: |
+          echo "Commit by ${{ steps.commit-info.outputs.COMMITTER_NAME }} on ${{ steps.commit-info.outputs.COMMIT_DATE }}" >> UpdateLog.txt
+          echo "Message: ${{ steps.commit-info.outputs.COMMIT_MESSAGE }}" >> UpdateLog.txt
+          echo "----------------------------------------" >> UpdateLog.txt
+
+      # 步骤4：提交更改（以管理员B的身份）
+      - name: Commit changes
+        run: |
+          git config --global user.name "CaduceusMetaverseProtocol"
+          git config --global user.email "metaverse1024@gmail.com"
+          git add UpdateLog.txt
+          git commit -m "Auto-update UpdateLog.txt with latest commit"
+          git push https://${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git test
